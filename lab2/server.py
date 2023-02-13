@@ -44,10 +44,14 @@ def handleClient(connection, addr):
 			break
 		### Write your code here ###
 		#broadcast this message to the others
+		broadcast_message = "From "+str(addr).split()[1] + ": " + message
+		broadcast(connection, broadcast_message)
 		
 		### Your code ends here ###
 	connection.close()
 	all_client_connections.remove(connection)
+	leave_message = "Client left: " + str(addr)
+	broadcast(connection, leave_message)
 
 def broadcast(connection, message):
 	print ("Broadcasting")
@@ -55,7 +59,6 @@ def broadcast(connection, message):
 	for client in all_client_connections:
 		if client != connection:
 			client.send(message.encode())
-			print("Broadcasting to: ", client, " message: ", message)
 
 	### Your code ends here ###
 
@@ -64,8 +67,8 @@ def main():
 	creates a server socket, listens for new connections,
 	and spawns a new thread whenever a new connection join
 	"""
-	serverPort = 12000
-	serverName = "127.0.0.13"
+	serverPort = 12006
+	serverName = "127.0.0.14"
 	serverSocket = socket(AF_INET,SOCK_STREAM)
 	try:
 		# Use the bind function wisely!
