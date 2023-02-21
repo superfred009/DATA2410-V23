@@ -10,7 +10,7 @@ client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # write server ip and port, and connect
 ### write your code here ###
 serverName = "127.0.0.1"
-serverPort = 12006
+serverPort = 12007
 
 try:
 	client_socket.connect((serverName,serverPort))
@@ -46,9 +46,13 @@ while True:
 			# client, you should exit.
 
 			### write your code here ###
-
+			
 			message = socks.recv(2048).decode()
-			print(message)
+			if (not message.strip()):
+				sys.exit()
+			else:
+				print(message)
+				
 
 			### your code ends here ###
 
@@ -57,11 +61,13 @@ while True:
 			#send a message to the server
 			### write your code here ###
 
-			sentence = input()
-			print("You: " + sentence)
-			client_socket.send(sentence.encode())
-			if (sentence == "exit"):
-				client_socket.close()
+			message = sys.stdin.readline()
+			if (message.strip().lower() == 'exit'):
+				sys.exit()
+
+			if (message.strip()):
+				print("You: " + message)
+				client_socket.send(message.encode())
 
 			### your code ends here ###
 

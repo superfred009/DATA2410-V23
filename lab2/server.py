@@ -67,14 +67,13 @@ def main():
 	creates a server socket, listens for new connections,
 	and spawns a new thread whenever a new connection join
 	"""
-	serverPort = 12006
+	serverPort = 12007
 	serverName = "127.0.0.14"
 	serverSocket = socket(AF_INET,SOCK_STREAM)
 	try:
 		# Use the bind function wisely!
 		### Write your code here ###
 		serverSocket.bind(('', serverPort))
-
 
 		### Your code ends here ###
 		
