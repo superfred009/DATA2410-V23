@@ -26,12 +26,19 @@ def handleClient(connection, addr):
 	
 	### Write your code here ###
 	# append this this to the list for broadcast
+
+	# When a new client joins we append it to the connection list
+	# The server also prints all connected client's address and port number
+	# to keep track of all connected clients
 	all_client_connections.append(connection)
 	print("Server connections: ", all_client_connections)
+
 	# create a message to inform all other clients 
 	# that a new client has just joined.
+
+	# We create a broadcast message that a client joins by adding the address to a "client joined" string
 	broadcast_message = "New client joined: " + str(addr)
-	# broadcast this message to the others
+	# broadcast this message to the others using the broadcast function
 	broadcast(connection, broadcast_message)
 
 
@@ -44,6 +51,9 @@ def handleClient(connection, addr):
 			break
 		### Write your code here ###
 		#broadcast this message to the others
+
+		# Broadcast message is created by adding the address to the message
+		# with the split method we remove the port number from the address to make it more readable
 		broadcast_message = "From "+str(addr).split()[1] + ": " + message
 		broadcast(connection, broadcast_message)
 		
@@ -56,6 +66,10 @@ def handleClient(connection, addr):
 def broadcast(connection, message):
 	print ("Broadcasting")
 	### Write your code here ###
+
+	# Broadcast this message to the other clients
+	# We loop through all the clients in the connection list
+	# and send the message to all clients except the client that sent the message
 	for client in all_client_connections:
 		if client != connection:
 			client.send(message.encode())
@@ -67,12 +81,14 @@ def main():
 	creates a server socket, listens for new connections,
 	and spawns a new thread whenever a new connection join
 	"""
-	serverPort = 12007
+	serverPort = 12008
 	serverName = "127.0.0.14"
 	serverSocket = socket(AF_INET,SOCK_STREAM)
 	try:
 		# Use the bind function wisely!
 		### Write your code here ###
+		# Bind the server to the serverName and serverPort
+		# If the bind fails the server exits
 		serverSocket.bind(('', serverPort))
 
 		### Your code ends here ###
@@ -84,6 +100,8 @@ def main():
 	print ('The server is ready to receive')
 	while True:
 		### Write your code here ###
+
+		# Accept the connection and print the address of the client
 		connectionSocket, addr = serverSocket.accept()
 		### You code ends here ###
 		 

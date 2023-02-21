@@ -9,9 +9,14 @@ client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # write server ip and port, and connect
 ### write your code here ###
-serverName = "127.0.0.1"
-serverPort = 12007
 
+# Add server ip and port
+
+serverName = "127.0.0.1"
+serverPort = 12008
+
+# Try connecting to the server with ip and port
+# If the connection fails the client exits
 try:
 	client_socket.connect((serverName,serverPort))
 	print("Connected to server")
@@ -46,7 +51,11 @@ while True:
 			# client, you should exit.
 
 			### write your code here ###
-			
+
+			# Recieves message from server and decodes it
+			# If the message is empty the client exits
+			# Else the message is printed
+
 			message = socks.recv(2048).decode()
 			if (not message.strip()):
 				sys.exit()
@@ -60,6 +69,11 @@ while True:
 			#takes inputs from the user and print message
 			#send a message to the server
 			### write your code here ###
+
+			# Reads input from user and sends it as an encoded message to server
+			# If the message is exit the client exits
+			# We use strip and lower methods to remove any whitespace and case sensitivity from the exit message
+			# We also check if the input message is empty, so we do not broadcast empty messages to the server
 
 			message = sys.stdin.readline()
 			if (message.strip().lower() == 'exit'):
